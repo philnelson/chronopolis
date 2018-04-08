@@ -15,7 +15,10 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 """
 
 from evennia import default_cmds
-
+from evennia import CmdSet
+from commands import command
+from evennia.contrib.mail import CmdMail
+from evennia.contrib import dice
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
     """
@@ -33,6 +36,9 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        self.add(dice.CmdDice())
+        self.add(command.CmdAttack())
+        self.add(command.CmdEquip())
 
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
@@ -52,7 +58,7 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-
+        self.add(CmdMail)
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
     """

@@ -48,7 +48,7 @@ WEBSERVER_PORTS = [(4001, 4002)]
 SSL_ENABLED = False
 SSL_PORTS = [4003]
 # SSH client ports. Requires crypto lib. Visible.
-SSH_ENABLED = False
+SSH_ENABLED = True 
 SSH_PORTS = [4004]
 # Websocket-client port. Visible.
 WEBSOCKET_CLIENT_ENABLED = True

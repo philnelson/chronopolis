@@ -6,7 +6,10 @@ Commands describe the input the account can do to the game.
 """
 
 from evennia import Command as BaseCommand
-# from evennia import default_cmds
+from evennia import default_cmds
+from evennia import create_object
+import random
+from world import rules
 
 
 class Command(BaseCommand):
@@ -30,6 +33,77 @@ class Command(BaseCommand):
 
     """
     pass
+
+class CmdAttack(Command):
+    """
+    attack an opponent
+    
+    Usage:
+      attack <target>
+
+    This will attack a target in the same room, dealing 
+    damage with your bare hands. 
+    """
+    
+    key = "+attack"
+    
+    def func(self):
+        "Implementing combat"
+
+        caller = self.caller
+        if not self.args:
+            caller.msg("You need to pick a target to attack.")
+            return
+
+        target = caller.search(self.args)
+        if target:
+            rules.do_attack(caller, target)
+            
+class CmdEquip(Command):
+    """
+    equip an item
+    
+    Usage:
+      equip <target>
+
+    This will equip an item in your inventory.
+    """
+    
+    key = "+equip"
+    
+    def func(self):
+        "Implementing equip"
+
+        caller = self.caller
+        if not self.args:
+            caller.msg("You need to pick an item to equip.")
+            return
+
+        target = caller.search(self.args)
+        if target:
+        
+            in_inventory = False 
+
+            items = self.caller.contents
+            for item in items:
+                if item == target:
+                    in_inventory = True
+                
+            if not in_inventory:
+               caller.msg("You don't have the {}".format(target.name))
+            else:
+                already_equipped = False
+                
+                for item in caller.db.equipment:
+                    if item == target:
+                        already_equipped = True
+                    
+                if already_equipped == False:
+                    caller.db.equipment.append(target)
+                    caller.msg("Equipped {}".format(target.name))
+                else:
+                    caller.msg("You've already got {} equipped.".format(target.name))
+
 
 # -------------------------------------------------------------
 #
