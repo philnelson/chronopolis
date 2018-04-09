@@ -40,17 +40,9 @@ class Weapon(Object):
         The return from this method is what
         looker sees when looking at this object.
         """
-        text = "{} {} {}".format(self.db.quality, self.db.material, super(Object, self).return_appearance(looker))
-        
-        damage_bonus = rules.ITEM_QUALITY[self.db.quality]['bonus'] + WEAPON_MATERIALS[self.db.material]['bonus']
-        damage = "{}-{}".format(WEAPON_TYPES[self.db.weapon_type]['min'], WEAPON_TYPES[self.db.weapon_type]['max'])
-        
-        if damage_bonus > 0:
-            cscore = " ({} {} damage)".format(damage,damage_bonus)
-        else:
-            cscore = " ({} damage)".format(damage)
+        text = super(Object, self).return_appearance(looker)
             
-        cscore += ""
+        cscore = ""
         if "\n" in text:
             # text is multi-line, add score after first line
             first_line, rest = text.split("\n", 1)
@@ -70,11 +62,11 @@ class Weapon(Object):
         damage = "{}-{}".format(WEAPON_TYPES[self.db.weapon_type]['min'], WEAPON_TYPES[self.db.weapon_type]['max'])
         
         if damage_bonus > 0:
-            desc = "{} +{} damage".format(damage,damage_bonus)
+            desc = "{} +{} damage {} {} {}".format(damage,damage_bonus, self.db.quality, self.db.material, self.db.weapon_type)
         if damage_bonus < 0:
-            desc = "{} {} damage".format(damage,damage_bonus)
+            desc = "{} {} damage {} {} {}".format(damage,damage_bonus, self.db.quality, self.db.material, self.db.weapon_type)
         else:
-            desc = "{} damage".format(damage)
+            desc = "{} damage {} {} {}".format(damage,self. db.quality, self.db.material, self.db.weapon_type)
         
         self.db.desc = desc
         
