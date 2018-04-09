@@ -12,7 +12,11 @@ from random import randint
 import json
 
 SKILLS = {
-    'punching': {'affects': 'attack'}
+    'fighter': {
+        "effects": [{
+            
+        }],
+    },
 }
 
 class Character(DefaultCharacter):
@@ -46,7 +50,7 @@ class Character(DefaultCharacter):
         self.db.experience = 0
         self.db.armor_rating = 1
         self.db.equipment = []
-        self.db.skills = {}
+        self.db.skills = []
 
     def return_appearance(self, looker):
         """
